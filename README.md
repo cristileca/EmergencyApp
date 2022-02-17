@@ -1,6 +1,6 @@
 # EmergencyApp
 
-# Obictivul principal al aplicat¸iei Android este de a sprijini utilizatorii in situatiile de urgenta.
+# Obictivul principal al aplicatiei Android este de a sprijini utilizatorii in situatiile de urgenta.
 Prin intermediul cursurilor de prim ajutor si a ındrumatorului, aplicatia ofera
 informatiile necesare pentru a acorda asistenta medicala necesara si a ajuta utilizatorul oferindu-i
 ındrumari pas cu pas. Pentru a ajuta utilizatorii sa inteleaga procedeele de acordare a asistentei medi-
