@@ -1,0 +1,12 @@
+{
+  "name": "emergency",
+  "displayName": "emergency",
+  "expo": {
+    "name": "emergency",
+    "slug": "emergency",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}

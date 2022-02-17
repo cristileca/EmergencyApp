@@ -1,0 +1,195 @@
+/*async getLocations(data) {
+    let query = {
+      location: {
+        $near: {
+          $geometry: { type: data.type, coordinates: [data.long, data.lat] },
+          $maxDistance: data.distance,
+        },
+      },
+    };
+
+    let result = await this.findByCustom(query, "locations");
+    console.log(JSON.stringify(result));
+
+    console.log("--------");
+    return result;
+  }
+
+  async addLocation(location) {
+    location.addTime = Date.now();
+    location.votes = [];
+    location.rating = -1.0;
+
+    console.log(JSON.stringify(location));
+
+    var inserted = await this.insertOne(location, "locations");
+    if (inserted) return success(inserted);
+    else return error("Something went wrong!");
+  }
+
+  async addPicture(picPath, locId, userId) {
+    let picture = {
+      path: picPath,
+      locId: locId,
+      userId: userId,
+      addTime: Date.now(),
+    };
+    console.log("Image object : ", picture);
+    var inserted = await this.insertOne(picture, "pictures");
+    if (inserted) return success(inserted);
+    else return error("Something went wrong!");
+  }
+
+  async getPictures(data) {
+    let query = {
+      locId: data.locId,
+    };
+
+    let result = await this.findByCustom(query, "pictures");
+    console.log(JSON.stringify(result));
+
+    result.forEach((image) => {
+      image.path = config.mainURL + image.path.replace(config.toDelete, "");
+    });
+
+    return result;
+  }
+
+  async vote(vote) {
+    vote.addTime = Date.now();
+    let locToVote = await this.findById(vote.id, "locations");
+    let o_id = new mongo.ObjectID(vote.id);
+    let query = {
+      _id: o_id,
+    };
+
+    if (locToVote.rating === -1) locToVote.rating = vote.rate;
+    else locToVote.rating = (vote.rate + locToVote.rating) / 2;
+
+    await locToVote.votes.push({
+      rate: vote.rate,
+      comm: vote.comm,
+    });
+
+    var locUpdated = { $set: locToVote };
+    var inserted = await this.collection("locations").updateOne(
+      query,
+      locUpdated
+    );
+
+    if (inserted.result.ok == 1) return success(locToVote.rating);
+    else return error("Something went wrong!");
+  }
+
+  //#region Main functions
+  async registerCar(car) {
+    // Adding extra details
+    car.time = Date.now();
+
+    let x = await this.findByPlate(car.plate);
+
+    if (x === null) {
+      car.retired = false;
+      var inserted = await this.insertOne(car, "cars");
+      if (inserted) return success("Car registered successfully");
+      else return error("Internal error");
+    }
+
+    return error(`${car.plate} already exists`);
+  }
+
+  async removeCar(car) {
+    var removed = await this.removeByPlate(car.plate);
+    if (removed) {
+      return success(`Plate ${car.plate} removed`);
+    } else {
+      return error(`Plate ${car.plate} doesn't exist`);
+    }
+  }
+
+  async updateCar(car) {
+    var updated = await this.updateByPlate(car);
+    if (updated) {
+      return success(`Car with plate ${car.plate} was updated`);
+    } else {
+      return error(`Update of ${car.plate} failed`);
+    }
+  }
+
+  async companyCars() {
+    var found = await this.findByCustom(
+      {
+        isCompany: true,
+        retired: false,
+      },
+      "cars"
+    );
+    return success(found);
+  }
+
+  async retiredCars() {
+    var found = await this.findByCustom(
+      {
+        isCompany: true,
+        retired: true,
+      },
+      "cars"
+    );
+    return success(found);
+  }
+
+  async foreignCars() {
+    var found = await this.findByCustom(
+      {
+        isCompany: false,
+      },
+      "cars"
+    );
+    return success(found);
+  }
+
+  async getLogsByPlate(plate) {
+    var logsFound = await this.findByCustom({ plate: plate }, "logs");
+
+    for (let i = 0; i < logsFound.length; i++) {
+      if (logsFound[i].image) logsFound[i].image = true;
+    }
+
+    return success(logsFound);
+  }
+
+  async getLogPhoto(logWithID) {
+    var logsFound = await this.findById(logWithID._id, "logs");
+
+    if (logsFound.length > 0) return success(logsFound[0].image);
+    else return error("No photo found");
+  }
+
+  //#endregion
+
+  //#region Shortcuts
+  //#endregion
+
+  //#region Query Functions
+
+  async updateByPlate(car) {
+    const collection = this.collection("cars");
+    const query = {
+      plate: car.plate,
+    };
+    var newCar = { $set: car };
+    let res = await collection.updateOne(query, newCar);
+    return res.result.ok == 1;
+  }
+  
+  async findByPlate(plate) {
+    const collection = this.collection("cars");
+
+    const query = {
+      plate: plate,
+    };
+    const car = collection.findOne(query);
+
+    return car;
+  }
+  */
